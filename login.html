@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NoemiVerse // Login</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #fff6fb;
+      --card: #ffffff;
+      --accent: #ff4b6e;
+      --accent-2: #ff9f68;
+      --text: #402035;
+      --muted: #9b6b86;
+      --danger: #e11d48;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Space Grotesk", sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(255,182,193,.6), transparent 45%),
+        radial-gradient(circle at 90% 100%, rgba(255,248,220,.7), transparent 45%),
+        linear-gradient(135deg, #fff9fb, #ffeef8);
+      color: var(--text);
+    }
+
+    .card {
+      width: 420px;
+      max-width: 92%;
+      background: var(--card);
+      border-radius: 20px;
+      padding: 26px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.1);
+      border: 1px solid rgba(255,182,193,.8);
+      animation: fade .5s ease;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      background: var(--accent);
+      border-radius: 6px;
+      box-shadow: 0 0 18px var(--accent);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      50% { transform: scale(1.15); }
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    input {
+      width: 100%;
+      padding: 11px;
+      margin-top: 4px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,182,193,.8);
+      font-size: 14px;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .error {
+      color: var(--danger);
+      font-size: 12px;
+      margin-top: 10px;
+      min-height: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="logo">
+      <div class="dot"></div>
+      <strong>NOEMIVERSE</strong>
+    </div>
+
+    <h1>Tela de Login</h1>
+    <p class="subtitle">
+      Para entrar no NoemiVerse v18.0, diga quem você é  
+      e quando o universo ficou melhor.
+    </p>
+
+    <label>Usuário</label>
+    <input id="user" placeholder="aniversariante">
+
+    <label>Senha</label>
+    <input id="pass" type="password">
+
+    <button onclick="login()">Entrar no NoemiVerse</button>
+
+    <div class="error" id="error"></div>
+  </div>
+
+  <script>
+    function login() {
+      const user = document.getElementById("user").value.trim().toLowerCase();
+      const pass = document.getElementById("pass").value.replace(/\D/g, "");
+      const error = document.getElementById("error");
+
+      if (user === "noemi" && pass === "22122007") {
+        window.location.href = "noemiverse.html";
+      } else {
+        error.textContent = "Credenciais inválidas. Lembra quem é a estrela de hoje 🌟";
+      }
+    }
+  </script>
+</body>
+</html>

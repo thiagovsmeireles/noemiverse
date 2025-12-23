@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NoemiVerse v18.0</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fff6fb;
+      --bg-strong: #ffe0f0;
+      --card: #ffffff;
+      --accent: #ff4b6e;
+      --accent-soft: #ff9f68;
+      --accent-soft-2: #ffcdd7;
+      --text: #402035;
+      --muted: #9b6b86;
+      --good: #16a34a;
+      --shadow-soft: 0 22px 60px rgba(0, 0, 0, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 22px 18px 28px;
+      font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 0 0, rgba(255, 182, 193, 0.7), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(255, 243, 176, 0.7), transparent 55%),
+        linear-gradient(135deg, #fff9fb 0%, #ffeef8 50%, #fff6f0 100%);
+      color: var(--text);
+    }
+
+    .app {
+      max-width: 1120px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(14px);
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 182, 193, 0.9);
+      padding: 20px 20px 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app::before,
+    .app::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(26px);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .app::before {
+      width: 220px;
+      height: 220px;
+      background: rgba(255, 182, 193, 0.7);
+      top: -110px;
+      right: -70px;
+    }
+
+    .app::after {
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 243, 181, 0.9);
+      bottom: -110px;
+      left: -70px;
+    }
+
+    header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: var(--good);
+      box-shadow: 0 0 18px rgba(22, 163, 74, 0.8);
+      position: relative;
+    }
+
+    .status-dot::after {
+      content: "";
+      position: absolute;
+      inset: -5px;
+      border-radius: inherit;
+      border: 2px solid rgba(34, 197, 94, 0.7);
+      opacity: 0.7;
+      animation: ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    @keyframes ping {
+      0% { transform: scale(0.9); opacity: 0.8; }
+      70% { transform: scale(1.3); opacity: 0; }
+      100% { opacity: 0; }
+    }
+
+    .brand-text h1 {
+      margin: 0 0 4px;
+      font-size: 22px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #ff4b6e, #ff9f68);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .brand-text p {
+      margin: 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.1);
+      color: var(--good);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 1px solid rgba(34, 197, 94, 0.5);
+    }
+
+    .grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.45fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 18px;
+      padding: 16px 16px 14px;
+      border: 1px solid rgba(255, 225, 236, 0.9);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0 0, rgba(255, 182, 193, 0.15), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .panel > * { position: relative; z-index: 1; }
+
+    .panel h2 {
+      margin: 0 0 6px;
+      font-size: 15px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .panel p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .log-lines {
+      margin-top: 10px;
+      padding: 10px 10px 10px;
+      border-radius: 12px;
+      background: #120914;
+      color: #e5e7eb;
+      font-family: "Space Grotesk", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 11px;
+      max-height: 190px;
+      overflow: hidden;
+      border: 1px solid #27272a;
+    }
+
+    .log-line {
+      opacity: 0.9;
+      margin-bottom: 3px;
+    }
+
+    .log-line strong { color: #a5b4fc; }
+
+    .log-ok { color: #bbf7d0; }
+
+    .log-heart { color: #f9a8d4; }
+
+    .metrics {
+      margin-top: 6px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .metric {
+      background: linear-gradient(145deg, #fffdfd, #ffe9f2);
+      border-radius: 14px;
+      padding: 9px 9px 10px;
+      border: 1px solid rgba(255, 182, 193, 0.9);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      box-shadow: 0 8px 20px rgba(244, 114, 182, 0.25);
+      transform: translateY(0);
+      transition: transform 0.14s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+      cursor: default;
+    }
+
+    .metric:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(244, 114, 182, 0.32);
+      border-color: rgba(244, 63, 94, 0.9);
+    }
+
+    .metric-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .metric-value {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .metric-tag {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .section-title h3 {
+      margin: 0;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    .tag {
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(248, 250, 252, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: #64748b;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .pill {
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(251, 113, 133, 0.8);
+      color: #be123c;
+    }
+
+    .achievements {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .achievement {
+      background: linear-gradient(135deg, #ffffff, #ffe9f2);
+      border-radius: 14px;
+      padding: 9px 9px 10px;
+      border: 1px solid rgba(251, 113, 133, 0.75);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 12px;
+      box-shadow: 0 10px 24px rgba(251, 113, 133, 0.3);
+      transform: translateY(0);
+      transition: transform 0.14s ease, box-shadow 0.16s ease;
+      cursor: default;
+    }
+
+    .achievement:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(251, 113, 133, 0.36);
+    }
+
+    .achievement-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.6);
+      font-size: 15px;
+    }
+
+    .achievement-text strong {
+      display: block;
+      margin-bottom: 1px;
+    }
+
+    .bugs {
+      margin-top: 4px;
+      padding: 8px 9px 8px;
+      border-radius: 12px;
+      background: rgba(254, 242, 242, 0.98);
+      border: 1px dashed rgba(248, 113, 113, 0.8);
+      font-size: 12px;
+      color: #b91c1c;
+    }
+
+    .bugs ul {
+      margin: 4px 0 0;
+      padding-left: 16px;
+    }
+
+    .bugs li { margin-bottom: 2px; }
+
+    .footer {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: right;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Confetti */
+    .confetti-piece {
+      position: fixed;
+      width: 7px;
+      height: 14px;
+      top: -20px;
+      border-radius: 2px;
+      opacity: 0.9;
+      pointer-events: none;
+      animation: confetti-fall linear forwards;
+    }
+
+    @keyframes confetti-fall {
+      0% { transform: translate3d(0, 0, 0) rotateZ(0deg); opacity: 1; }
+      100% { transform: translate3d(var(--drift), 110vh, 0) rotateZ(360deg); opacity: 0; }
+    }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      .app { padding: 18px 14px 18px; border-radius: 18px; }
+      header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand">
+        <div class="status-dot"></div>
+        <div class="brand-text">
+          <h1>NOEMIVERSE v18.0</h1>
+          <p>Sistema de parabéns em execução: build especial para Noemi.</p>
+        </div>
+      </div>
+      <div class="badge">100% ONLINE • HUMOR ESTÁVEL • AMOR ILIMITADO</div>
+    </header>
+
+    <div class="grid">
+      <section class="panel">
+        <h2>Console do universo</h2>
+        <p>Relatório rápido do sistema que ficou muito mais bonito em 22/12/2007.</p>
+
+        <div class="log-lines">
+          <div class="log-line"><strong>&gt;</strong> boot sequence // universo &rarr; carrega módulo <span class="log-heart">noemi-core</span></div>
+          <div class="log-line log-ok">[OK] 22/12/2007 00:00 — release 18.0 preparado com sucesso.</div>
+          <div class="log-line log-ok">[OK] Emoções: risadas, abraços e momentos absurdamente bons inicializados.</div>
+          <div class="log-line">[INFO] Gosto musical &rarr; variável marcada como <span class="log-heart">excelente</span>.</div>
+          <div class="log-line">[INFO] Impacto social: amizades fortalecidas, dias menos cinzas, memórias salvas.</div>
+          <div class="log-line log-ok">[OK] Status: pessoa oficialmente incrível em produção.</div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric">
+            <span class="metric-label">Uptime</span>
+            <span class="metric-value">100% desde 22/12/2007</span>
+            <span class="metric-tag">sem quedas, só upgrades de personalidade</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Versão</span>
+            <span class="metric-value">v18.0</span>
+            <span class="metric-tag">release estável, mais madura e ainda fofinha</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Usuários impactados</span>
+            <span class="metric-value">muitos 😌</span>
+            <span class="metric-tag">amigos, família e gente sortuda pelo caminho</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Status</span>
+            <span class="metric-value">estável &amp; brilhando</span>
+            <span class="metric-tag">carisma em alta, bugs controlados (ou quase)</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-title">
+          <h3>Conquistas desbloqueadas</h3>
+          <span class="tag">parabéns, noemi</span>
+        </div>
+
+        <div class="pill-row">
+          <span class="pill">gosto musical excelente</span>
+          <span class="pill">senso de humor acima da média</span>
+          <span class="pill">capacidade de deixar qualquer dia mais leve</span>
+        </div>
+
+        <div class="achievements">
+          <article class="achievement">
+            <div class="achievement-icon">✓</div>
+            <div class="achievement-text">
+              <strong>Sobreviveu a mais um ano</strong>
+              <span>Entre caos, risadas e plot twists, é incrível!.</span>
+            </div>
+          </article>
+
+          <article class="achievement">
+            <div class="achievement-icon">★</div>
+            <div class="achievement-text">
+              <strong>Evoluiu como pessoa</strong>
+              <span>Aprendeu, sentiu, cresceu e ainda manteve a essência fofa.</span>
+            </div>
+          </article>
+
+          <article class="achievement">
+            <div class="achievement-icon">♡</div>
+            <div class="achievement-text">
+              <strong>Espalhou risadas por aí</strong>
+              <span> Acredito que tornou conversas, rolês e momentos muito mais leves.</span>
+            </div>
+          </article>
+
+          <article class="achievement">
+            <div class="achievement-icon">∞</div>
+            <div class="achievement-text">
+              <strong>Carisma compilado com sucesso</strong>
+              <span>Build estável: difícil achar quem não goste de você.</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="section-title" style="margin-top: 6px;">
+          <h3>Bugs conhecidos</h3>
+          <span class="tag">não corrigir, faz parte</span>
+        </div>
+
+        <div class="bugs">
+          <ul>
+            <li>Perfeição em excesso em alguns momentos. (devs ainda tentando entender).</li>
+            <li>Carisma alto demais, causando dependência em pessoas próximas.</li>
+            <li>Beleza acima da média, podendo gerar crush espontâneo em observadores.</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer">Release especial 22/12/2007 &rarr; 18 anos depois, o universo continua muito mais bonito com você por aqui. 🎂✨</div>
+  </div>
+
+  <script>
+    function spawnConfettiPiece() {
+      const colors = [
+        "#ff4b6e",
+        "#ff9f68",
+        "#f97316",
+        "#facc15",
+        "#22c55e",
+        "#38bdf8",
+        "#a855f7",
+        "#f472b6",
+      ];
+      const piece = document.createElement("div");
+      piece.className = "confetti-piece";
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const left = Math.random() * 100;
+      const drift = (Math.random() - 0.5) * 120 + "px";
+      const duration = 2200 + Math.random() * 1800;
+
+      piece.style.left = left + "vw";
+      piece.style.background = color;
+      piece.style.setProperty("--drift", drift);
+      piece.style.animationDuration = duration + "ms";
+
+      document.body.appendChild(piece);
+      setTimeout(() => piece.remove(), duration + 400);
+    }
+
+    function celebrate() {
+      for (let i = 0; i < 120; i++) {
+        setTimeout(spawnConfettiPiece, i * 15);
+      }
+    }
+
+    window.addEventListener("load", () => {
+      celebrate();
+    });
+  </script>
+</body>
+</html>
